@@ -1,9 +1,14 @@
 package org.usfirst.frc.team5420.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
@@ -14,9 +19,17 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	RobotDrive myRobot = new RobotDrive(0, 1);
-	Joystick stick = new Joystick(0);
+	RobotDrive myRobot = new RobotDrive(1, 0);
 	Timer timer = new Timer();
+	public static  Solenoid solenoid0;
+	public static Solenoid solenoid1;
+	public static Encoder encoder1;
+	public static Compressor compressor0;
+	public static Joystick joystick0;
+	public static Joystick joystick1;
+	public static DigitalInput UpperLimit;
+	public static DigitalInput LowerLimit;
+	public static VictorSP LiftMotor;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -24,7 +37,17 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		solenoid0 = new Solenoid(2);
+		solenoid1 = new Solenoid(3);
+		encoder1 = new Encoder(0,1, false, Encoder.EncodingType.k4X);
+		compressor0 = new Compressor(0);
+		joystick0 = new Joystick(0);
+		joystick1 = new Joystick(1);
+		UpperLimit = new DigitalInput(4);
+		LowerLimit = new DigitalInput(2);
+		LiftMotor= new VictorSP(2);
 	}
+	
 
 	/**
 	 * This function is run once each time the robot enters autonomous mode
@@ -41,11 +64,13 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		// Drive for 2 seconds
+		/*
 		if (timer.get() < 2.0) {
 			myRobot.drive(-0.5, 0.0); // drive forwards half speed
 		} else {
 			myRobot.drive(0.0, 0.0); // stop robot
 		}
+		*/
 	}
 
 	/**
@@ -54,6 +79,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopInit() {
+		compressor0.setClosedLoopControl(true);
 	}
 
 	/**
@@ -61,7 +87,26 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		myRobot.arcadeDrive(stick);
+		//Drive Motor Control
+		myRobot.tankDrive(joystick0, joystick1);
+		
+		//Get the Upper and and the Lower Status of the Sensor and Allow or Disallow Operation(s) control.
+		double Yvalue = joystick1.getY();
+		if (Yvalue > 0 && !UpperLimit.get()){
+			LiftMotor.set(Yvalue);			
+		}
+		else if(Yvalue < 0 && !LowerLimit.get()){
+			LiftMotor.set(Yvalue);
+		}
+		else { //No Value or the 
+			LiftMotor.set(0);
+		}
+		
+		//Lift Control
+		if(joystick0.getRawButton(0)){
+			solenoid0.set(true);
+			solenoid1.set(false);
+		}
 	}
 
 	/**
