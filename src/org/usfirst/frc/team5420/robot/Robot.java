@@ -41,8 +41,8 @@ public class Robot extends IterativeRobot {
 		solenoid1 = new Solenoid(3);
 		encoder1 = new Encoder(0,1, false, Encoder.EncodingType.k4X);
 		compressor0 = new Compressor(0);
-		joystick0 = new Joystick(0);
-		joystick1 = new Joystick(1);
+		joystick0 = new Joystick(0); //Controller One
+		joystick1 = new Joystick(1); //Controller Two
 		UpperLimit = new DigitalInput(4);
 		LowerLimit = new DigitalInput(2);
 		LiftMotor= new VictorSP(2);
@@ -88,10 +88,13 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		//Drive Motor Control
-		myRobot.tankDrive(joystick0, joystick1);
+			//myRobot.tankDrive(joystick0, joystick1);
+		myRobot.tankDrive(joystick0, joystick0);
 		
 		//Get the Upper and and the Lower Status of the Sensor and Allow or Disallow Operation(s) control.
-		double Yvalue = joystick1.getY();
+			//Look at "the axis or button number as a parameter and return the corresponding value" https://wpilib.screenstepslive.com/s/4485/m/13809/l/599723-joysticks
+			//double Yvalue = joystick1.getY();
+		double Yvalue = joystick1.getRawAxis(1);
 		if (Yvalue > 0 && !UpperLimit.get()){
 			LiftMotor.set(Yvalue);			
 		}
@@ -106,6 +109,10 @@ public class Robot extends IterativeRobot {
 		if(joystick0.getRawButton(0)){
 			solenoid0.set(true);
 			solenoid1.set(false);
+		}
+		else {
+			solenoid0.set(false);
+			solenoid1.set(true);
 		}
 	}
 
