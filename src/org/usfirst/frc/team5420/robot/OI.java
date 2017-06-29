@@ -1,7 +1,6 @@
 package org.usfirst.frc.team5420.robot;
 
 import edu.wpi.first.wpilibj.buttons.Button;
-
 import org.usfirst.frc.team5420.robot.commands.ExampleCommand;
 
 /**
