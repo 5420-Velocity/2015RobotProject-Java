@@ -3,6 +3,7 @@ package org.usfirst.frc.team5420.robot;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -88,7 +89,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		//Drive Motor Control
-		myRobot.tankDrive(joystick0, joystick0); //Pulling joystick values from Only One Controller not One from CTRL1 and the other from CTRL2
+		myRobot.tankDrive(joystick0.getY(Hand.kLeft), joystick0.getY(Hand.kRight)); //Pulling joystick values from Only One Controller not One from CTRL1 and the other from CTRL2
 		
 		//Get the Upper and and the Lower Status of the Sensor and Allow or Disallow Operation(s) control.
 		//Look at "the axis or button number as a parameter and return the corresponding value" https://wpilib.screenstepslive.com/s/4485/m/13809/l/599723-joysticks
