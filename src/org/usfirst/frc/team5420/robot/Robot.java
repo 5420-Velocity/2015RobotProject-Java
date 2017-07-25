@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	RobotDrive myRobot = new RobotDrive(1, 0);
+	RobotDrive myRobot = new RobotDrive(0, 9);
 	Timer timer = new Timer();
 	public static  Solenoid solenoid0;
 	public static Solenoid solenoid1;
