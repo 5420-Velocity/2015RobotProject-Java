@@ -40,7 +40,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		solenoid0 = new Solenoid(2);
 		solenoid1 = new Solenoid(3);
-		encoder1 = new Encoder(0,1, false, Encoder.EncodingType.k4X);
+		encoder1 = new Encoder(6,7, false, Encoder.EncodingType.k4X);
 		compressor0 = new Compressor(0);
 		joystick0 = new Joystick(0); //Controller One
 		joystick1 = new Joystick(1); //Controller Two
