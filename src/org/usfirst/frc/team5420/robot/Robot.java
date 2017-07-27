@@ -89,7 +89,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		//Drive Motor Control
-		myRobot.tankDrive(joystick0.getY(Hand.kLeft), joystick0.getY(Hand.kRight)); //Pulling joystick values from Only One Controller not One from CTRL1 and the other from CTRL2
 		
 		//Get the Upper and and the Lower Status of the Sensor and Allow or Disallow Operation(s) control.
 		//Look at "the axis or button number as a parameter and return the corresponding value" https://wpilib.screenstepslive.com/s/4485/m/13809/l/599723-joysticks
