@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	RobotDrive myRobot = new RobotDrive(0, 9);
+	RobotDrive myRobot = new RobotDrive(0, 1);
 	Timer timer = new Timer();
 	public static  Solenoid solenoid0;
 	public static Solenoid solenoid1;
@@ -44,8 +44,8 @@ public class Robot extends IterativeRobot {
 		compressor0 = new Compressor(0);
 		joystick0 = new Joystick(0); //Controller One
 		joystick1 = new Joystick(1); //Controller Two
-		UpperLimit = new DigitalInput(4);
-		LowerLimit = new DigitalInput(2);
+		UpperLimit = new DigitalInput(0);
+		LowerLimit = new DigitalInput(9);
 		LiftMotor= new VictorSP(2);
 	}
 	
