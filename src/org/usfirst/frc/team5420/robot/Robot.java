@@ -105,7 +105,7 @@ public class Robot extends IterativeRobot {
 		}
 		
 		//Lift Control
-		if(joystick0.getRawButton(0)){
+		if(joystick0.getRawButton(1)){
 			solenoid0.set(true);
 			solenoid1.set(false);
 		}
