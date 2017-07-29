@@ -84,32 +84,46 @@ public class Robot extends IterativeRobot {
 	}
 
 	/**
+	 * This is just a basic function to shorten the command/function
+	 * @param value String Input
+	 */
+	private void putToConsole(String value){
+		System.out.println(value);
+	}
+	
+	/**
 	 * This function is called periodically during operator control
 	 */
 	@Override
 	public void teleopPeriodic() {
 		//Drive Motor Control
-		myRobot.arcadeDrive(joystick0.getRawAxis(1), joystick0.getRawAxis(4)); //Pulling joystick values from Only One Controller not One from CTRL1 and the other from CTRL2
+		myRobot.arcadeDrive(-(joystick0.getRawAxis(1)), -(joystick0.getRawAxis(4))); //Pulling joystick values from Only One Controller not One from CTRL1 and the other from CTRL2
 		
 		//Get the Upper and and the Lower Status of the Sensor and Allow or Disallow Operation(s) control.
 		//Look at "the axis or button number as a parameter and return the corresponding value" https://wpilib.screenstepslive.com/s/4485/m/13809/l/599723-joysticks
 		double Yvalue = joystick1.getRawAxis(1);
-		if (Yvalue > 0 && !UpperLimit.get()){
+		if (Yvalue < 0 && UpperLimit.get() == false){
+			putToConsole("Uppper Limit has been triggered"); // The Console Log
 			LiftMotor.set(Yvalue);			
 		}
-		else if(Yvalue < 0 && !LowerLimit.get()){
+		// The Value is inverted in the Hardware on the NC/NO Switch
+		else if(Yvalue > 0 && LowerLimit.get() == false){
+			putToConsole("Lower Limit has been triggered"); // The Console Log
 			LiftMotor.set(Yvalue);
 		}
 		else { //No Value or the 
+			putToConsole("Set to Zero has been triggered"); // The Console Log
 			LiftMotor.set(0);
 		}
 		
 		//Lift Control
-		if(joystick0.getRawButton(1)){
+		if(joystick1.getRawButton(1)){
+			putToConsole("Lift Close Triggered");
 			solenoid0.set(true);
 			solenoid1.set(false);
 		}
 		else {
+			putToConsole("Lift Open Triggered");
 			solenoid0.set(false);
 			solenoid1.set(true);
 		}
