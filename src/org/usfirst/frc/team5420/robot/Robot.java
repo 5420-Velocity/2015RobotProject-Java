@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5420.robot;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
@@ -38,8 +39,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		solenoid0 = new Solenoid(2);
-		solenoid1 = new Solenoid(3);
+		//solenoid0 = new Solenoid(2);
+		//solenoid1 = new Solenoid(3);
 		encoder1 = new Encoder(6,7, false, Encoder.EncodingType.k4X);
 		compressor0 = new Compressor(0);
 		joystick0 = new Joystick(0); //Controller One
@@ -47,6 +48,11 @@ public class Robot extends IterativeRobot {
 		UpperLimit = new DigitalInput(0);
 		LowerLimit = new DigitalInput(9);
 		LiftMotor= new VictorSP(2);
+	}
+	
+	@Override
+	public void robotPeriodic(){
+		
 	}
 	
 
@@ -134,6 +140,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		LiveWindow.run();
+		LiveWindow.run(); 
 	}
 }
